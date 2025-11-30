@@ -1,0 +1,36 @@
+<html>
+<body>
+<h2>Agents for Good - UI</h2>
+
+<select id="agent">
+  <option value="education">Education Agent</option>
+  <option value="healthcare">Healthcare Agent</option>
+  <option value="sustainability">Sustainability Agent</option>
+</select>
+
+<br><br>
+<textarea id="prompt" rows="5" cols="40"></textarea>
+<br><br>
+
+<button onclick="send()">Ask Agent</button>
+
+<pre id="output"></pre>
+
+<script>
+async function send() {
+  const agent = document.getElementById("agent").value;
+  const prompt = document.getElementById("prompt").value;
+
+  const res = await fetch(`/agent/${agent}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await res.json();
+  document.getElementById("output").innerText = data.response;
+}
+</script>
+
+</body>
+</html>
